@@ -435,7 +435,11 @@ test "zmath.arrNPtr" {
         try expect(f32ptr[15] == 1.0);
     }
     {
-        const v8 = f32x8s(1.0);
+        // Runtime-known on purpose: since Zig 0.17 a comptime dereference
+        // through this pointer requires @Vector(8, f32) to have a well-defined
+        // layout, which it does not.
+        var v8 = f32x8s(1.0);
+        _ = &v8;
         const f32ptr = arrNPtr(&v8);
         try expect(f32ptr[1] == 1.0);
         try expect(f32ptr[7] == 1.0);
@@ -1440,7 +1444,7 @@ pub inline fn swizzle(
     comptime z: F32x4Component,
     comptime w: F32x4Component,
 ) F32x4 {
-    return @shuffle(f32, v, undefined, [4]i32{ @intFromEnum(x), @intFromEnum(y), @intFromEnum(z), @intFromEnum(w) });
+    return @shuffle(f32, v, undefined, [4]i32{ @backingInt(x), @backingInt(y), @backingInt(z), @backingInt(w) });
 }
 
 pub inline fn mod(v0: anytype, v1: anytype) @TypeOf(v0, v1) {

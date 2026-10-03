@@ -1,5 +1,21 @@
 # [zmath](https://github.com/zig-gamedev/zmath)
 
+> **This is the Lenore fork of zig-gamedev/zmath**, kept so that the
+> [Lenore engine](https://github.com/lenore-engine) builds on Zig 0.17.0 before
+> upstream moves. It starts at upstream commit `9e42b04` and changes only what
+> 0.17 requires:
+>
+> - `build.zig`: `std.lang.Optimize` and its lower-case members; the two build
+>   options are added by name, since `std.meta.fields` is gone.
+> - `build.zig.zon`: `minimum_zig_version` 0.17.0, and a new `fingerprint`, as
+>   Zig asks of a fork while upstream is maintained.
+> - `src/root.zig`: the `zmath.arrNPtr` test reads its vector at run time,
+>   because 0.17 rejects that dereference at comptime; `zig fmt` 0.17 rewrites
+>   `@intFromEnum` to `@backingInt`.
+>
+> The licence and its copyright notices are upstream's and unchanged. Prefer
+> upstream once it supports 0.17.
+
 SIMD math library for game developers
 
 Tested on x86_64 and AArch64.

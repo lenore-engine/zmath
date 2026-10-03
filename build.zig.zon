@@ -1,8 +1,8 @@
 .{
     .name = .zmath,
-    .fingerprint = 0xfd23d422bd223cc2,
+    .fingerprint = 0xfd23d422ceadb51b, // Changing this has security and trust implications.
     .version = "0.11.0-dev",
-    .minimum_zig_version = "0.16.0",
+    .minimum_zig_version = "0.17.0",
     .paths = .{
         "build.zig",
         "build.zig.zon",

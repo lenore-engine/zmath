@@ -5,10 +5,10 @@ pub fn build(b: *std.Build) void {
 
     const options = .{
         .optimize = b.option(
-            std.builtin.OptimizeMode,
+            std.lang.Optimize,
             "optimize",
             "The optimization level to use for the build",
-        ) orelse .ReleaseFast,
+        ) orelse .fast,
         .enable_cross_platform_determinism = b.option(
             bool,
             "enable_cross_platform_determinism",
@@ -17,9 +17,8 @@ pub fn build(b: *std.Build) void {
     };
 
     const options_step = b.addOptions();
-    inline for (std.meta.fields(@TypeOf(options))) |field| {
-        options_step.addOption(field.type, field.name, @field(options, field.name));
-    }
+    options_step.addOption(std.lang.Optimize, "optimize", options.optimize);
+    options_step.addOption(bool, "enable_cross_platform_determinism", options.enable_cross_platform_determinism);
 
     const options_module = options_step.createModule();
 
